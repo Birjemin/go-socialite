@@ -17,9 +17,9 @@ var (
 	}
 
 	qqObj = &Qq{
-		appID:       "test_app_id",
-		appSecret:   "test_app_secret",
-		redirectUri: "http://localhost/redirect_uri",
+		AppID:       "test_app_id",
+		AppSecret:   "test_app_secret",
+		RedirectUri: "http://localhost/redirect_uri",
 		HTTPRequest: httpClient,
 	}
 )

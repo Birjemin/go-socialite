@@ -22,9 +22,9 @@ const (
 // Wx
 // @doc: https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html
 type Wx struct {
-	appID       string
-	appSecret   string
-	redirectUri string
+	AppID       string
+	AppSecret   string
+	RedirectUri string
 	HTTPRequest *utils.HTTPClient
 }
 
@@ -63,9 +63,9 @@ type wxUserInfo struct {
 func (w *Wx) GetAuthorizeURL(args ...string) string {
 
 	params := make(map[string]string, 5)
-	params["appid"] = w.appID
+	params["appid"] = w.AppID
 	params["response_type"] = wxResponseType
-	params["redirect_uri"] = w.redirectUri
+	params["redirect_uri"] = w.RedirectUri
 
 	length := len(args)
 
@@ -96,8 +96,8 @@ func (w *Wx) doToken(url, code string) (ret *wxRespToken, err error) {
 
 	params := map[string]string{
 		"grant_type": wxGrantTypeAuth,
-		"appid":      w.appID,
-		"secret":     w.appSecret,
+		"appid":      w.AppID,
+		"secret":     w.AppSecret,
 		"code":       code,
 	}
 
@@ -143,7 +143,7 @@ func (w *Wx) doRefreshToken(url, refreshToken string) (ret *wxRespToken, err err
 
 	params := map[string]string{
 		"grant_type":    wxGrantTypeRefresh,
-		"appid":         w.appID,
+		"appid":         w.AppID,
 		"refresh_token": refreshToken,
 	}
 

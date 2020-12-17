@@ -27,9 +27,9 @@ const (
 // Qq
 // @doc: https://wiki.open.qq.com/wiki/website/%E4%BD%BF%E7%94%A8Authorization_Code%E8%8E%B7%E5%8F%96Access_Token
 type Qq struct {
-	appID       string
-	appSecret   string
-	redirectUri string
+	AppID       string
+	AppSecret   string
+	RedirectUri string
 	HTTPRequest *utils.HTTPClient
 }
 
@@ -59,8 +59,8 @@ func (q *Qq) GetAuthorizeURL(args ...string) string {
 
 	params := make(map[string]string, 6)
 	params["response_type"] = authorizeResponseType
-	params["client_id"] = q.appID
-	params["redirect_uri"] = q.redirectUri
+	params["client_id"] = q.AppID
+	params["redirect_uri"] = q.RedirectUri
 
 	length := len(args)
 
@@ -94,10 +94,10 @@ func (q *Qq) doToken(url, code string) (ret []byte, err error) {
 
 	params := map[string]string{
 		"grant_type":    qqGrantTypeAuth,
-		"client_id":     q.appID,
-		"client_secret": q.appSecret,
+		"client_id":     q.AppID,
+		"client_secret": q.AppSecret,
 		"code":          code,
-		"redirect_uri":  q.redirectUri,
+		"redirect_uri":  q.RedirectUri,
 	}
 
 	if err := q.HTTPRequest.HTTPGet(url, params); err != nil {
@@ -168,8 +168,8 @@ func (q *Qq) doRefreshToken(url, refreshToken string) (ret []byte, err error) {
 
 	params := map[string]string{
 		"grant_type":    qqGrantTypeRefresh,
-		"client_id":     q.appID,
-		"client_secret": q.appSecret,
+		"client_id":     q.AppID,
+		"client_secret": q.AppSecret,
 		"refresh_token": refreshToken,
 	}
 
@@ -258,7 +258,7 @@ func (q *Qq) doGetUserInfo(url, accessToken, openID string) (ret *qqUserInfo, er
 
 	params := map[string]string{
 		"access_token":       accessToken,
-		"oauth_consumer_key": q.appID,
+		"oauth_consumer_key": q.AppID,
 		"openid":             openID,
 	}
 

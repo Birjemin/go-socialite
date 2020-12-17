@@ -17,9 +17,9 @@ var (
 	}
 
 	wxObj = &Wx{
-		appID:       "APPID",
-		appSecret:   "SECRET",
-		redirectUri: "REDIRECT_URI",
+		AppID:       "APPID",
+		AppSecret:   "SECRET",
+		RedirectUri: "REDIRECT_URI",
 		HTTPRequest: wxHttpClient,
 	}
 )
