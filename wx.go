@@ -24,7 +24,7 @@ const (
 type Wx struct {
 	AppID       string
 	AppSecret   string
-	RedirectUri string
+	RedirectURL string
 	HTTPRequest *utils.HTTPClient
 }
 
@@ -65,7 +65,7 @@ func (w *Wx) GetAuthorizeURL(args ...string) string {
 	params := make(map[string]string, 5)
 	params["appid"] = w.AppID
 	params["response_type"] = wxResponseType
-	params["redirect_uri"] = w.RedirectUri
+	params["redirect_uri"] = w.RedirectURL
 
 	length := len(args)
 

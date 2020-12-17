@@ -29,7 +29,7 @@ const (
 type Qq struct {
 	AppID       string
 	AppSecret   string
-	RedirectUri string
+	RedirectURL string
 	HTTPRequest *utils.HTTPClient
 }
 
@@ -60,7 +60,7 @@ func (q *Qq) GetAuthorizeURL(args ...string) string {
 	params := make(map[string]string, 6)
 	params["response_type"] = authorizeResponseType
 	params["client_id"] = q.AppID
-	params["redirect_uri"] = q.RedirectUri
+	params["redirect_uri"] = q.RedirectURL
 
 	length := len(args)
 
@@ -97,7 +97,7 @@ func (q *Qq) doToken(url, code string) (ret []byte, err error) {
 		"client_id":     q.AppID,
 		"client_secret": q.AppSecret,
 		"code":          code,
-		"redirect_uri":  q.RedirectUri,
+		"redirect_uri":  q.RedirectURL,
 	}
 
 	if err := q.HTTPRequest.HTTPGet(url, params); err != nil {
