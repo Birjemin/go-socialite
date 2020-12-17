@@ -158,6 +158,11 @@ func (w *Wx) doRefreshToken(url, refreshToken string) (ret *wxRespToken, err err
 	return ret, nil
 }
 
+// GetMe get me
+func (w *Wx) GetMe(accessToken string) (*RespMe, error) {
+	return nil, errors.New("can not support")
+}
+
 // GetUserInfo get user info
 func (w *Wx) GetUserInfo(accessToken, openID string) (*RespUserInfo, error) {
 

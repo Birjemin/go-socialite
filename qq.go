@@ -185,7 +185,7 @@ func (q *Qq) doRefreshToken(url, refreshToken string) (ret []byte, err error) {
 }
 
 // GetMe get me
-func (q *Qq) GetMe(accessToken string) (*QqRespMe, error) {
+func (q *Qq) GetMe(accessToken string) (*RespMe, error) {
 
 	b, err := q.doGetMe(qqMeURL, accessToken)
 	if err != nil {
@@ -213,10 +213,10 @@ func (q *Qq) doGetMe(url, accessToken string) (ret []byte, err error) {
 }
 
 // getRespMe response
-func (q *Qq) getRespMe(b []byte) (*QqRespMe, error) {
+func (q *Qq) getRespMe(b []byte) (*RespMe, error) {
 
 	match, _ := regexp.Match("error", b)
-	ret := new(QqRespMe)
+	ret := new(RespMe)
 
 	// regexp
 	pattern, err := regexp.Compile(`{.*}`)

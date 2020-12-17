@@ -1,6 +1,8 @@
 package socialite
 
-type Default struct{}
+import (
+	"errors"
+)
 
 // RespToken struct
 type RespToken struct {
@@ -25,17 +27,38 @@ type RespUserInfo struct {
 	Avatar   string `json:"avatar"`
 }
 
-// ISocialite interface
-type ISocialite interface {
-	// GetAuthorizeURL get authorize url
-	GetAuthorizeURL(args string) string
-
-	// Token get token
-	Token(code string) (*RespToken, error)
-
-	// RefreshToken refresh token
-	RefreshToken(refreshToken string) (*RespToken, error)
-
-	// GetUserInfo get user info
-	GetUserInfo(accessToken, openID string) (*RespUserInfo, error)
+// RespMe response of me
+type RespMe struct {
+	Code     int    `json:"code"`
+	Msg      string `json:"msg"`
+	ClientID string `json:"client_id"`
+	OpenID   string `json:"openid"`
 }
+
+type Default struct{}
+
+// GetAuthorizeURL get authorize url
+func (d *Default) GetAuthorizeURL(args ...string) string {
+	return "invalid"
+}
+
+// Token token
+func (d *Default) Token(code string) (*RespToken, error) {
+	return nil, errors.New("invalid")
+}
+
+// RefreshToken refresh token
+func (d *Default) RefreshToken(refreshToken string) (*RespToken, error) {
+	return nil, errors.New("invalid")
+}
+
+// GetMe get me
+func (d *Default) GetMe(accessToken string) (*RespMe, error) {
+	return nil, errors.New("can not support")
+}
+
+// GetUserInfo get user info
+func (d *Default) GetUserInfo(accessToken, openID string) (*RespUserInfo, error) {
+	return nil, errors.New("invalid")
+}
+
