@@ -9,6 +9,7 @@ import (
 const (
 	wxAuthorizeURL = "https://open.weixin.qq.com/connect/qrconnect"
 	wxResponseType = "code"
+	wxScope        = "snsapi_login"
 
 	wxTokenURL      = "https://api.weixin.qq.com/sns/oauth2/access_token"
 	wxGrantTypeAuth = "authorization_code"
@@ -66,16 +67,12 @@ func (w *Wx) GetAuthorizeURL(args ...string) string {
 	params["appid"] = w.AppID
 	params["response_type"] = wxResponseType
 	params["redirect_uri"] = w.RedirectURL
+	params["scope"] = wxScope
 
 	length := len(args)
 
-	if length < 1 {
-		panic("args is invalid, please input state, scope, display")
-	} else {
-		params["scope"] = args[0]
-		if length >= 2 {
-			params["state"] = args[1]
-		}
+	if length > 0 {
+		params["state"] = args[0]
 	}
 
 	return fmt.Sprintf("%s?%s", wxAuthorizeURL, utils.QuerySortByKeyStr2(params))
