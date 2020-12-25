@@ -143,18 +143,19 @@ func (w *Wx) GetUserInfo(accessToken, openID string) (interface{}, error) {
 }
 
 // doGetUserInfo handle
-func (w *Wx) doGetUserInfo(url, accessToken, openID string) (ret map[string]interface{}, err error) {
+func (w *Wx) doGetUserInfo(url, accessToken, openID string) (*WxUserInfo, error) {
 
 	params := map[string]string{
 		"access_token": accessToken,
+		"openid":       openID,
 	}
 
 	if err := w.HTTPRequest.HTTPGet(url, params); err != nil {
 		return nil, err
 	}
 
-	 ret = make(map[string]interface{})
-	if w.HTTPRequest.GetResponseJSON(&ret) != nil {
+	ret := new(WxUserInfo)
+	if err := w.HTTPRequest.GetResponseJSON(ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

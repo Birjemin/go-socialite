@@ -35,14 +35,13 @@ type Qq struct {
 
 // qqRespErrorToken response of err
 type qqRespErrorToken struct {
-	Error          int    `json:"error"`
-	ErrDescription string `json:"error_description"`
+	ErrCode int    `json:"error"`
+	ErrMsg  string `json:"error_description"`
 }
 
 // QqRespToken struct
 type QqRespToken struct {
-	Code         int    `json:"code"`
-	Msg          string `json:"msg"`
+	qqRespErrorToken
 	AccessToken  string `json:"access_token"`
 	ExpiresIn    int    `json:"expires_in"`
 	RefreshToken string `json:"refresh_token"`
@@ -50,8 +49,7 @@ type QqRespToken struct {
 
 // QqRespMe response of me
 type QqRespMe struct {
-	Code     int    `json:"code"`
-	Msg      string `json:"msg"`
+	qqRespErrorToken
 	ClientID string `json:"client_id"`
 	OpenID   string `json:"openid"`
 }
@@ -185,12 +183,9 @@ func (q *Qq) getRespToken(b []byte) (*QqRespToken, error) {
 			return ret, err
 		}
 
-		respErr := new(qqRespErrorToken)
-		if err := jsoniter.Unmarshal(pattern.Find(b), &respErr); err != nil {
+		if err := jsoniter.Unmarshal(pattern.Find(b), &ret); err != nil {
 			return ret, err
 		}
-		ret.Code = respErr.Error
-		ret.Msg = respErr.ErrDescription
 
 		return ret, errors.New("get token error")
 	} else {
@@ -254,12 +249,9 @@ func (q *Qq) getRespMe(b []byte) (*QqRespMe, error) {
 
 	// error
 	if match {
-		respErr := new(qqRespErrorToken)
-		if err := jsoniter.Unmarshal(pattern.Find(b), &respErr); err != nil {
+		if err := jsoniter.Unmarshal(pattern.Find(b), &ret); err != nil {
 			return ret, err
 		}
-		ret.Code = respErr.Error
-		ret.Msg = respErr.ErrDescription
 
 		return ret, errors.New("get token error")
 	} else {

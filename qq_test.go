@@ -53,7 +53,7 @@ func TestGetErrRespToken(t *testing.T) {
 		ast.Fail("err result")
 		return
 	}
-	ast.Equal(100002, ret.Code)
+	ast.Equal(100002, ret.ErrCode)
 }
 
 // TestGetSuccessRespToken
@@ -68,7 +68,7 @@ func TestGetSuccessRespToken(t *testing.T) {
 		return
 	}
 
-	ast.Equal(0, ret.Code)
+	ast.Equal(0, ret.ErrCode)
 	ast.Equal("FE04************************CCE2", ret.AccessToken)
 	ast.Equal(7776000, ret.ExpiresIn)
 	ast.Equal("88E4************************BE14", ret.RefreshToken)
@@ -109,7 +109,7 @@ func TestQqToken(t *testing.T) {
 		ast.Error(err)
 	}
 
-	ast.Equal(0, ret.Code)
+	ast.Equal(0, ret.ErrCode)
 	ast.Equal("FE04************************CCE2", ret.AccessToken)
 	ast.Equal(7776000, ret.ExpiresIn)
 	ast.Equal("88E4************************BE14", ret.RefreshToken)
@@ -129,7 +129,7 @@ func TestQqToken(t *testing.T) {
 		ast.Fail("err result")
 		return
 	}
-	ast.Equal(100004, ret.Code)
+	ast.Equal(100004, ret.ErrCode)
 }
 
 // TestQqRefreshToken
@@ -167,7 +167,7 @@ func TestQqRefreshToken(t *testing.T) {
 		ast.Error(err)
 	}
 
-	ast.Equal(0, ret.Code)
+	ast.Equal(0, ret.ErrCode)
 	ast.Equal("FE04************************CCE2", ret.AccessToken)
 	ast.Equal(7776000, ret.ExpiresIn)
 	ast.Equal("88E4************************BE14", ret.RefreshToken)
@@ -187,7 +187,7 @@ func TestQqRefreshToken(t *testing.T) {
 		ast.Fail("err result")
 		return
 	}
-	ast.Equal(100004, ret.Code)
+	ast.Equal(100004, ret.ErrCode)
 }
 
 // TestGetErrRespMe
@@ -204,7 +204,7 @@ func TestGetErrRespMe(t *testing.T) {
 		ast.Fail("err result")
 		return
 	}
-	ast.Equal(100016, ret.Code)
+	ast.Equal(100016, ret.ErrCode)
 }
 
 // TestGetSuccessRespMe
@@ -219,7 +219,7 @@ func TestGetSuccessRespMe(t *testing.T) {
 		return
 	}
 
-	ast.Equal(0, ret.Code)
+	ast.Equal(0, ret.ErrCode)
 	ast.Equal("YOUR_APPID", ret.ClientID)
 	ast.Equal("YOUR_OPENID", ret.OpenID)
 }
@@ -256,7 +256,7 @@ func TestQqMe(t *testing.T) {
 		ast.Error(err)
 	}
 
-	ast.Equal(0, ret.Code)
+	ast.Equal(0, ret.ErrCode)
 	ast.Equal("YOUR_OPENID", ret.OpenID)
 	ast.Equal("YOUR_APPID", ret.ClientID)
 
@@ -275,7 +275,7 @@ func TestQqMe(t *testing.T) {
 		ast.Fail("err result")
 		return
 	}
-	ast.Equal(100016, ret.Code)
+	ast.Equal(100016, ret.ErrCode)
 }
 
 // TestQqUserInfo

@@ -2,7 +2,6 @@ package socialite
 
 import (
 	"github.com/stretchr/testify/assert"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"socialite/utils"
@@ -148,33 +147,20 @@ func TestWxUserInfo(t *testing.T) {
 	defer ts.Close()
 
 	// success
-	b, err := wxObj.doGetUserInfo(ts.URL, "YOUR_ACCESS_TOKEN", "YOUR_OPENID")
+	ret, err := wxObj.doGetUserInfo(ts.URL, "YOUR_ACCESS_TOKEN", "YOUR_OPENID")
 	if err != nil {
 		ast.Error(err)
 	}
-log.Println("ret:", b)
-	// ret, err := wxObj.getRespUserInfo(b)
-	// if err != nil {
-	// 	ast.Error(err)
-	// }
-	//
-	// ast.Equal(0, ret.Code)
-	// ast.Equal("YOUR_OPENID", ret.OpenID)
-	//
-	// // fail
-	// b, err = wxObj.doGetUserInfo(ts.URL, "", "")
-	// if err != nil {
-	// 	ast.Fail(err.Error())
-	// 	return
-	// }
-	//
-	// ret, err = wxObj.getRespUserInfo(b)
-	// if err != nil {
-	// 	ast.Equal("get user info error", err.Error())
-	// }
-	// if ret == nil {
-	// 	ast.Fail("err result")
-	// 	return
-	// }
-	// ast.Equal(40003, ret.Code)
+
+	ast.Equal(0, ret.ErrCode)
+	ast.Equal("YOUR_OPENID", ret.OpenID)
+
+	// fail
+	ret, err = wxObj.doGetUserInfo(ts.URL, "", "")
+	if err != nil {
+		ast.Fail(err.Error())
+		return
+	}
+
+	ast.Equal(40003, ret.ErrCode)
 }
