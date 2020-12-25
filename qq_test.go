@@ -278,46 +278,6 @@ func TestQqMe(t *testing.T) {
 	ast.Equal(100016, ret.Code)
 }
 
-
-// TestQqGetErrRespUserInfo
-func TestQqGetErrRespUserInfo(t *testing.T) {
-
-	ast := assert.New(t)
-
-	stack := new(qqUserInfo)
-	stack.Ret = 1001
-	stack.Msg = "invalid code"
-	ret, err := qqObj.getRespUserInfo(stack)
-
-	if err != nil {
-		ast.Equal("get user info error", err.Error())
-	}
-	if ret == nil {
-		ast.Fail("err result")
-		return
-	}
-	ast.Equal(1001, ret.Code)
-}
-
-// TestQqGetSuccessRespUserInfo
-func TestQqGetSuccessRespUserInfo(t *testing.T) {
-
-	ast := assert.New(t)
-
-	stack := new(qqUserInfo)
-	stack.Nickname = "NICKNAME"
-	ret, err := qqObj.getRespUserInfo(stack)
-
-	if err != nil {
-		ast.Equal("get token error", err.Error())
-	}
-	if ret == nil {
-		ast.Fail("err result")
-		return
-	}
-	ast.Equal("NICKNAME", ret.Nickname)
-}
-
 // TestQqUserInfo
 func TestQqUserInfo(t *testing.T) {
 
@@ -340,32 +300,20 @@ func TestQqUserInfo(t *testing.T) {
 	defer ts.Close()
 
 	// success
-	b, err := qqObj.doGetUserInfo(ts.URL, "YOUR_ACCESS_TOKEN", "YOUR_OPENID")
+	ret, err := qqObj.doGetUserInfo(ts.URL, "YOUR_ACCESS_TOKEN", "YOUR_OPENID")
 	if err != nil {
 		ast.Error(err)
 	}
 
-	ret, err := qqObj.getRespUserInfo(b)
-	if err != nil {
-		ast.Error(err)
-	}
-	ast.Equal(0, ret.Code)
+	ast.Equal(0, ret.Ret)
 	ast.Equal("YOUR_NICK_NAME", ret.Nickname)
 
 	// fail
-	b, err = qqObj.doGetUserInfo(ts.URL, "", "")
+	ret, err = qqObj.doGetUserInfo(ts.URL, "", "")
 	if err != nil {
 		ast.Fail(err.Error())
 		return
 	}
 
-	ret, err = qqObj.getRespUserInfo(b)
-	if err != nil {
-		ast.Equal("get user info error", err.Error())
-	}
-	if ret == nil {
-		ast.Fail("err result")
-		return
-	}
-	ast.Equal(1001, ret.Code)
+	ast.Equal(1001, ret.Ret)
 }

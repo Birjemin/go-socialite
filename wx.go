@@ -35,8 +35,8 @@ type wxRespErrorToken struct {
 	ErrMsg  string `json:"errmsg"`
 }
 
-// wxRespToken response of me
-type wxRespToken struct {
+// WxRespToken response of me
+type WxRespToken struct {
 	wxRespErrorToken
 	AccessToken  string `json:"access_token"`
 	ExpiresIn    int    `json:"expires_in"`
@@ -46,8 +46,8 @@ type wxRespToken struct {
 	UnionID      string `json:"unionid"`
 }
 
-// wxUserInfo user info
-type wxUserInfo struct {
+// WxUserInfo user info
+type WxUserInfo struct {
 	wxRespErrorToken
 	OpenID     string      `json:"openid"`
 	Nickname   string      `json:"nickname"`
@@ -79,17 +79,13 @@ func (w *Wx) GetAuthorizeURL(args ...string) string {
 }
 
 // Token get token
-func (w *Wx) Token(code string) (*RespToken, error) {
+func (w *Wx) Token(code string) (interface{}, error) {
 
-	b, err := w.doToken(wxTokenURL, code)
-	if err != nil {
-		return nil, err
-	}
-	return w.getRespToken(b)
+	return w.doToken(wxTokenURL, code)
 }
 
 // doToken handle
-func (w *Wx) doToken(url, code string) (ret *wxRespToken, err error) {
+func (w *Wx) doToken(url, code string) (ret *WxRespToken, err error) {
 
 	params := map[string]string{
 		"grant_type": wxGrantTypeAuth,
@@ -102,41 +98,21 @@ func (w *Wx) doToken(url, code string) (ret *wxRespToken, err error) {
 		return nil, err
 	}
 
-	ret = new(wxRespToken)
+	ret = new(WxRespToken)
 	if w.HTTPRequest.GetResponseJSON(ret) != nil {
 		return nil, err
 	}
 	return ret, nil
 }
 
-// getRespToken response
-func (w *Wx) getRespToken(temp *wxRespToken) (*RespToken, error) {
-
-	ret := new(RespToken)
-	if temp.ErrCode != 0 {
-		ret.Code = temp.ErrCode
-		ret.Msg = temp.ErrMsg
-		return ret, errors.New("get token error")
-	}
-	ret.AccessToken = temp.AccessToken
-	ret.RefreshToken = temp.RefreshToken
-	ret.ExpiresIn = temp.ExpiresIn
-	ret.OpenID = temp.OpenID
-	return ret, nil
-}
-
 // RefreshToken refresh token
-func (w *Wx) RefreshToken(refreshToken string) (*RespToken, error) {
+func (w *Wx) RefreshToken(refreshToken string) (interface{}, error) {
 
-	b, err := w.doRefreshToken(wxRefreshTokenURL, refreshToken)
-	if err != nil {
-		return nil, err
-	}
-	return w.getRespToken(b)
+	return w.doRefreshToken(wxRefreshTokenURL, refreshToken)
 }
 
 // doRefreshToken handle
-func (w *Wx) doRefreshToken(url, refreshToken string) (ret *wxRespToken, err error) {
+func (w *Wx) doRefreshToken(url, refreshToken string) (ret *WxRespToken, err error) {
 
 	params := map[string]string{
 		"grant_type":    wxGrantTypeRefresh,
@@ -148,7 +124,7 @@ func (w *Wx) doRefreshToken(url, refreshToken string) (ret *wxRespToken, err err
 		return nil, err
 	}
 
-	ret = new(wxRespToken)
+	ret = new(WxRespToken)
 	if w.HTTPRequest.GetResponseJSON(ret) != nil {
 		return nil, err
 	}
@@ -156,22 +132,18 @@ func (w *Wx) doRefreshToken(url, refreshToken string) (ret *wxRespToken, err err
 }
 
 // GetMe get me
-func (w *Wx) GetMe(accessToken string) (*RespMe, error) {
+func (w *Wx) GetMe(accessToken string) (interface{}, error) {
 	return nil, errors.New("can not support")
 }
 
 // GetUserInfo get user info
-func (w *Wx) GetUserInfo(accessToken, openID string) (*RespUserInfo, error) {
+func (w *Wx) GetUserInfo(accessToken, openID string) (interface{}, error) {
 
-	b, err := w.doGetUserInfo(wxUserInfoURL, accessToken, openID)
-	if err != nil {
-		return nil, err
-	}
-	return w.getRespUserInfo(b)
+	return w.doGetUserInfo(wxUserInfoURL, accessToken, openID)
 }
 
 // doGetUserInfo handle
-func (w *Wx) doGetUserInfo(url, accessToken, openID string) (ret *wxUserInfo, err error) {
+func (w *Wx) doGetUserInfo(url, accessToken, openID string) (ret map[string]interface{}, err error) {
 
 	params := map[string]string{
 		"access_token": accessToken,
@@ -181,28 +153,9 @@ func (w *Wx) doGetUserInfo(url, accessToken, openID string) (ret *wxUserInfo, er
 		return nil, err
 	}
 
-	ret = new(wxUserInfo)
-	if w.HTTPRequest.GetResponseJSON(ret) != nil {
+	 ret = make(map[string]interface{})
+	if w.HTTPRequest.GetResponseJSON(&ret) != nil {
 		return nil, err
 	}
-	return ret, nil
-}
-
-// getRespUserInfo response
-func (w *Wx) getRespUserInfo(temp *wxUserInfo) (*RespUserInfo, error) {
-
-	ret := new(RespUserInfo)
-	if temp.ErrCode != 0 {
-		ret.Code = temp.ErrCode
-		ret.Msg = temp.ErrMsg
-		return ret, errors.New("get user info error")
-	}
-	ret.OpenID = temp.OpenID
-	ret.Nickname = temp.Nickname
-	ret.Gender = temp.Sex
-	ret.Country = temp.Country
-	ret.Province = temp.Province
-	ret.City = temp.City
-	ret.Avatar = temp.HeadImgURL
 	return ret, nil
 }
