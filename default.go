@@ -34,7 +34,6 @@ type RespToken struct {
 
 // Default struct
 type Default struct{
-
 }
 
 // GetAuthorizeURL get authorize url
