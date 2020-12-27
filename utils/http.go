@@ -56,13 +56,6 @@ func (c *HTTPClient) GetResponseJSON(response interface{}) error {
 	if c.Response.Body == nil {
 		return errors.New("http request response body is empty")
 	}
-	//
-	// b ,err := ioutil.ReadAll(c.Response.Body)
-	// if err != nil {
-	// 	log.Println("body11: ", err.Error())
-	// }
-	// log.Println("body22: ", string(b))
-	//
 
 	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	defer c.Response.Body.Close()
