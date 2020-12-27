@@ -18,51 +18,51 @@ go get github.com/birjemin/go-socialite
 
 ```golang
 var (
-	httpClient = &utils.HTTPClient{
-		Client: &http.Client{
-			Timeout: 5 * time.Second,
-		},
-	}
+    httpClient = &utils.HTTPClient{
+        Client: &http.Client{
+            Timeout: 5 * time.Second,
+        },
+    }
 
-	defaultObj = &socialite.Default{}
+    defaultObj = &socialite.Default{}
 
-	qqObj = &socialite.Qq{
-		AppID:       "",
-		AppSecret:   "",
-		RedirectURL: "https://domain/qq/callback",
-		HTTPRequest: httpClient,
-	}
+    qqObj = &socialite.Qq{
+        AppID:       "",
+        AppSecret:   "",
+        RedirectURL: "https://domain/qq/callback",
+        HTTPRequest: httpClient,
+    }
 
-	wxObj = &socialite.Wechat{
-		AppID:       "",
-		AppSecret:   "",
-		RedirectURL: "https://domain/qq/callback",
-		HTTPRequest: httpClient,
-	}
+    wxObj = &socialite.Wechat{
+        AppID:       "",
+        AppSecret:   "",
+        RedirectURL: "https://domain/qq/callback",
+        HTTPRequest: httpClient,
+    }
 
-	wbObj = &socialite.Weibo{
-		ClientID:     "",
-		ClientSecret: "",
-		RedirectURL:  "http://domain.com/wb/callback",
-		HTTPRequest:  httpClient,
-	}
+    wbObj = &socialite.Weibo{
+        ClientID:     "",
+        ClientSecret: "",
+        RedirectURL:  "http://domain.com/wb/callback",
+        HTTPRequest:  httpClient,
+    }
 )
 
 func dispatch(platform string) socialite.ISocialite {
-	var obj socialite.ISocialite
+    var obj socialite.ISocialite
 
-	switch platform {
-	case "qq":
-		obj = qqObj
-	case "wx":
-		obj = wxObj
-	case "wb":
-		obj = wbObj
-	default:
-		obj = defaultObj
-	}
+    switch platform {
+    case "qq":
+        obj = qqObj
+    case "wx":
+        obj = wxObj
+    case "wb":
+        obj = wbObj
+    default:
+        obj = defaultObj
+    }
 
-	return obj
+    return obj
 }
 obj := dispatch("wx")
 // obj := dispatch("wb")
