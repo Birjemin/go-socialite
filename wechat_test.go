@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	wxHttpClient = &utils.HTTPClient{
+	wxHTTPClient = &utils.HTTPClient{
 		Client: &http.Client{
 			Timeout: 5 * time.Second,
 		},
@@ -20,7 +20,7 @@ var (
 		AppID:       "APPID",
 		AppSecret:   "SECRET",
 		RedirectURL: "REDIRECT_URI",
-		HTTPRequest: wxHttpClient,
+		HTTPRequest: wxHTTPClient,
 	}
 )
 

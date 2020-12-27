@@ -20,7 +20,7 @@ const (
 	wxUserInfoURL = "https://api.weixin.qq.com/sns/userinfo"
 )
 
-// Wechat
+// Wechat struct
 // @doc: https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html
 type Wechat struct {
 	AppID       string

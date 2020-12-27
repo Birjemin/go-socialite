@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	wbHttpClient = &utils.HTTPClient{
+	wbHTTPClient = &utils.HTTPClient{
 		Client: &http.Client{
 			Timeout: 5 * time.Second,
 		},
@@ -20,7 +20,7 @@ var (
 		ClientID:     "CLIENT_ID",
 		ClientSecret: "CLIENT_SECRET",
 		RedirectURL:  "REDIRECT_URI",
-		HTTPRequest:  wbHttpClient,
+		HTTPRequest:  wbHTTPClient,
 	}
 )
 

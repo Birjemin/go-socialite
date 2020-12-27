@@ -24,7 +24,7 @@ const (
 	qqUserInfoURL = "https://graph.qq.com/user/get_user_info"
 )
 
-// Qq
+// Qq struct
 // @doc: https://wiki.open.qq.com/wiki/website/%E4%BD%BF%E7%94%A8Authorization_Code%E8%8E%B7%E5%8F%96Access_Token
 type Qq struct {
 	AppID       string
@@ -188,23 +188,22 @@ func (q *Qq) getRespToken(b []byte) (*QqRespToken, error) {
 		}
 
 		return ret, errors.New("get token error")
-	} else {
-
-		pattern, err := regexp.Compile(`access_token=(\S*)&expires_in=(\S*)&refresh_token=(\S*)`)
-		if err != nil {
-			return ret, err
-		}
-		temp := pattern.FindSubmatch(b)
-
-		if len(temp) != 4 {
-			return ret, errors.New("length of result is invalid")
-		}
-		ret.AccessToken = string(temp[1])
-		expired, _ := strconv.ParseInt(string(temp[2]), 10, 64)
-		ret.ExpiresIn = int(expired)
-		ret.RefreshToken = string(temp[3])
-		return ret, nil
 	}
+
+	pattern, err := regexp.Compile(`access_token=(\S*)&expires_in=(\S*)&refresh_token=(\S*)`)
+	if err != nil {
+		return ret, err
+	}
+	temp := pattern.FindSubmatch(b)
+
+	if len(temp) != 4 {
+		return ret, errors.New("length of result is invalid")
+	}
+	ret.AccessToken = string(temp[1])
+	expired, _ := strconv.ParseInt(string(temp[2]), 10, 64)
+	ret.ExpiresIn = int(expired)
+	ret.RefreshToken = string(temp[3])
+	return ret, nil
 }
 
 // GetMe get me
@@ -254,13 +253,12 @@ func (q *Qq) getRespMe(b []byte) (*QqRespMe, error) {
 		}
 
 		return ret, errors.New("get token error")
-	} else {
-
-		if err := jsoniter.Unmarshal(pattern.Find(b), &ret); err != nil {
-			return ret, err
-		}
-		return ret, nil
 	}
+
+	if err := jsoniter.Unmarshal(pattern.Find(b), &ret); err != nil {
+		return ret, err
+	}
+	return ret, nil
 }
 
 // GetUserInfo get user info

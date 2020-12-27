@@ -17,6 +17,7 @@ const (
 	wbUserInfoURL = "https://api.weibo.com/2/users/show.json"
 )
 
+// Weibo struct
 type Weibo struct {
 	ClientID     string
 	ClientSecret string
@@ -29,7 +30,7 @@ type wbRespErrorToken struct {
 	ErrorCode int    `json:"error_code"`
 	Error     string `json:"error"`
 	Request   string `json:"request"`
-	ErrorUri  string `json:"error_uri"`
+	ErrorURI  string `json:"error_uri"`
 }
 
 // WbRespToken response of me
@@ -42,7 +43,7 @@ type WbRespToken struct {
 	IsRealName  string `json:"isRealName"`
 }
 
-// WbUserInfoWbUserInfo user info
+// WbUserInfo user info
 type WbUserInfo struct {
 	wbRespErrorToken
 	ID              int    `json:"id"`

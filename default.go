@@ -32,6 +32,7 @@ type RespToken struct {
 	OpenID       string `json:"openid"`
 }
 
+// Default struct
 type Default struct{}
 
 // GetAuthorizeURL get authorize url
