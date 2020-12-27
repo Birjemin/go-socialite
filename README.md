@@ -28,7 +28,7 @@ var (
 
 	qqObj = &socialite.Qq{
 		AppID:       "",
-		AppSecret:   "x",
+		AppSecret:   "",
 		RedirectURL: "https://domain/qq/callback",
 		HTTPRequest: httpClient,
 	}
@@ -86,7 +86,7 @@ if ok {
 }
 ```
 
-- 获取用户的OPEN_ID(QQ接口专有，wechat、weibo在上一步中已经返回用户标识)
+- 获取用户的OPEN_ID(qq接口专有，wechat、weibo在上一步中已经返回用户标识)
 ```golang
 resp, err := obj.GetMe("ACCESS_TOKEN")
 // 断言
