@@ -33,7 +33,9 @@ type RespToken struct {
 }
 
 // Default struct
-type Default struct{}
+type Default struct{
+
+}
 
 // GetAuthorizeURL get authorize url
 func (d *Default) GetAuthorizeURL(args ...string) string {

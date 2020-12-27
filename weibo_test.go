@@ -90,7 +90,7 @@ func TestWbUserInfo(t *testing.T) {
 `
 		val := r.FormValue("access_token")
 		if val == "" {
-			ret = `{"error":"source paramter(appkey) is missing","error_code":10006,"request":"/2/users/show.json"}`
+			ret = `{"error":"source parameter(appkey) is missing","error_code":10006,"request":"/2/users/show.json"}`
 		}
 
 		w.WriteHeader(http.StatusOK)
