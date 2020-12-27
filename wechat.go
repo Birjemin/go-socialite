@@ -20,9 +20,9 @@ const (
 	wxUserInfoURL = "https://api.weixin.qq.com/sns/userinfo"
 )
 
-// Wx
+// Wechat
 // @doc: https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html
-type Wx struct {
+type Wechat struct {
 	AppID       string
 	AppSecret   string
 	RedirectURL string
@@ -61,7 +61,7 @@ type WxUserInfo struct {
 }
 
 // GetAuthorizeURL get authorize url
-func (w *Wx) GetAuthorizeURL(args ...string) string {
+func (w *Wechat) GetAuthorizeURL(args ...string) string {
 
 	params := make(map[string]string, 5)
 	params["appid"] = w.AppID
@@ -79,13 +79,13 @@ func (w *Wx) GetAuthorizeURL(args ...string) string {
 }
 
 // Token get token
-func (w *Wx) Token(code string) (interface{}, error) {
+func (w *Wechat) Token(code string) (interface{}, error) {
 
 	return w.doToken(wxTokenURL, code)
 }
 
 // doToken handle
-func (w *Wx) doToken(url, code string) (ret *WxRespToken, err error) {
+func (w *Wechat) doToken(url, code string) (ret *WxRespToken, err error) {
 
 	params := map[string]string{
 		"grant_type": wxGrantTypeAuth,
@@ -106,13 +106,13 @@ func (w *Wx) doToken(url, code string) (ret *WxRespToken, err error) {
 }
 
 // RefreshToken refresh token
-func (w *Wx) RefreshToken(refreshToken string) (interface{}, error) {
+func (w *Wechat) RefreshToken(refreshToken string) (interface{}, error) {
 
 	return w.doRefreshToken(wxRefreshTokenURL, refreshToken)
 }
 
 // doRefreshToken handle
-func (w *Wx) doRefreshToken(url, refreshToken string) (ret *WxRespToken, err error) {
+func (w *Wechat) doRefreshToken(url, refreshToken string) (ret *WxRespToken, err error) {
 
 	params := map[string]string{
 		"grant_type":    wxGrantTypeRefresh,
@@ -132,18 +132,18 @@ func (w *Wx) doRefreshToken(url, refreshToken string) (ret *WxRespToken, err err
 }
 
 // GetMe get me
-func (w *Wx) GetMe(accessToken string) (interface{}, error) {
+func (w *Wechat) GetMe(accessToken string) (interface{}, error) {
 	return nil, errors.New("can not support")
 }
 
 // GetUserInfo get user info
-func (w *Wx) GetUserInfo(accessToken, openID string) (interface{}, error) {
+func (w *Wechat) GetUserInfo(accessToken, openID string) (interface{}, error) {
 
 	return w.doGetUserInfo(wxUserInfoURL, accessToken, openID)
 }
 
 // doGetUserInfo handle
-func (w *Wx) doGetUserInfo(url, accessToken, openID string) (*WxUserInfo, error) {
+func (w *Wechat) doGetUserInfo(url, accessToken, openID string) (*WxUserInfo, error) {
 
 	params := map[string]string{
 		"access_token": accessToken,

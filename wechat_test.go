@@ -16,7 +16,7 @@ var (
 		},
 	}
 
-	wxObj = &Wx{
+	wxObj = &Wechat{
 		AppID:       "APPID",
 		AppSecret:   "SECRET",
 		RedirectURL: "REDIRECT_URI",
@@ -24,7 +24,7 @@ var (
 	}
 )
 
-// TestGetAuthorizeUrl test GetAuthorizeURL
+// TestWxGetAuthorizeURL test GetAuthorizeURL
 func TestWxGetAuthorizeURL(t *testing.T) {
 
 	url1 := "https://open.weixin.qq.com/connect/qrconnect?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_login&state=SCOPE"
