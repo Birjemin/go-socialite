@@ -1,4 +1,4 @@
-module socialite
+module github.com/birjemin/socialite
 
 go 1.13
 
