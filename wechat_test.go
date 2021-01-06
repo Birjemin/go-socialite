@@ -1,10 +1,10 @@
 package socialite
 
 import (
+	"github.com/birjemin/socialite/utils"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
-	"socialite/utils"
 	"testing"
 	"time"
 )

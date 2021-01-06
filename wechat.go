@@ -3,7 +3,7 @@ package socialite
 import (
 	"errors"
 	"fmt"
-	"socialite/utils"
+	"github.com/birjemin/socialite/utils"
 )
 
 const (

@@ -3,9 +3,9 @@ package socialite
 import (
 	"errors"
 	"fmt"
+	"github.com/birjemin/socialite/utils"
 	jsoniter "github.com/json-iterator/go"
 	"regexp"
-	"socialite/utils"
 	"strconv"
 )
 
